@@ -156,3 +156,117 @@ new_k = 9 * 22222      # = 200,000
 # K remains constant: 200,000 = 200,000
 ```
 
+Starting Pool State:
+
+ETH: 10
+
+USDC: 20,000
+
+k = 200,000
+
+Buying 1 ETH:
+```
+# Starting: 10 ETH, 20,000 USDC
+new_eth = 9
+new_usdc = 200000 / 9  # = 22,222 USDC
+cost = 22222 - 20000   # = 2,222 USDC for 1 ETH
+```
+
+Buying 2 ETH:
+```
+# Starting: 10 ETH, 20,000 USDC
+new_eth = 8
+new_usdc = 200000 / 8  # = 25,000 USDC
+cost = 25000 - 20000   # = 5,000 USDC for 2 ETH
+# Price per ETH = 2,500 USDC
+```
+
+Buying 3 ETH:
+```
+# Starting: 10 ETH, 20,000 USDC
+new_eth = 7
+new_usdc = 200000 / 7  # = 28,571 USDC
+cost = 28571 - 20000   # = 8,571 USDC for 3 ETH
+# Price per ETH = 2,857 USDC
+```
+
+Buying 4 ETH:
+```
+# Starting: 10 ETH, 20,000 USDC
+new_eth = 6
+new_usdc = 200000 / 6  # = 33,333 USDC
+cost = 33333 - 20000   # = 13,333 USDC for 4 ETH
+# Price per ETH = 3,333 USDC
+```
+
+Another way to get constant k is to add x + y:
+
+```
+# Pool with stablecoins
+usdc = 100000
+usdt = 100000
+k = usdc + usdt  # = 200,000
+
+# Trading 10,000 USDC to USDT
+new_usdc = 90000
+new_usdt = 110000
+# Sum remains 200,000
+```
+
+----------------------------------------------------------
+----------------------------------------------------------
+
+# Uniswap V1 Price Manipulation
+
+To understand price manipulation in V1, you must first understand derivative contracts or trades.
+
+A derivative contract is a financial agreement whose value comes from another asset. Let's use clear examples:
+
+```
+Simple Leverage Position:
+
+You think ETH price will go up
+Instead of buying 1 ETH ($2000)
+You open a 5x leverage position with $2000
+(Quick note on what leverage poositin is -
+
+5x Leverage means:
+
+You put in $2000
+Protocol lends you an extra $8000
+Total position = $10,000 (5 times your money)
+If ETH goes up 10%:
+Regular profit would be $200 (on $2000)
+With 5x leverage: $1000 profit (5 times more)
+If ETH drops 20%:
+You lose your entire $2000 (liquidation))
+Now you control 5 ETH worth of position ($10,000)
+
+Options Contract:
+You get the right to buy ETH at $2000
+Even if ETH price goes to $3000
+You can still buy at $2000
+Profit = $1000 per ETH
+
+Futures Contract:
+Agreement to buy/sell ETH at $2000
+On a future date
+Regardless of actual price then
+
+These contracts "derive" their value from ETH price movements, hence the name "derivatives". They're used for:
+
+Trading with leverage
+Hedging positions
+Speculating on price movements
+Risk management
+```
+
+Let's break this down with a practical example of price manipulation in Uniswap v1:
+
+Initial State:
+
+- ETH-DAI pool has 100 ETH and 200,000 DAI
+- Current price: 1 ETH = 2000 DAI
+- A derivative contract uses this price to determine liquidations at < 1999 DAI
+
+
