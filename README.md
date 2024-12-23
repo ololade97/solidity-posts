@@ -21,7 +21,7 @@ Here's a practical example of TWAP for ETH/USDC pair:
 Let's say we want to calculate the 24-hour TWAP:
 
 Time Points:
-
+```
 T1 (24 hours ago): ETH = $2000
 T2 (18 hours ago): ETH = $2200
 T3 (12 hours ago): ETH = $1800
@@ -37,6 +37,7 @@ Period 4: $2100 × 6 hours = $12,600
 
 Total = $48,600
 TWAP = $48,600 ÷ 24 hours = $2,025
+```
 
 This $2,025 represents the true average price weighted by time, making it resistant to short-term price spikes or manipulation.
 
