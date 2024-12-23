@@ -65,7 +65,7 @@ Uses average price over time (like 24 hours)
 
 Makes it expensive for attackers to manipulate prices
 
-3. Stable Price Reference
+2. Stable Price Reference
    
 Smooths out temporary price spikes
 
