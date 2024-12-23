@@ -7,13 +7,19 @@ Time-weighted average price (TWAP) in Uniswap is a pricing mechanism that calcul
 Key aspects of TWAP:
 
 1. Price Accumulator
+   
 Tracks cumulative prices at each block
+
 Updates with each swap in the pool
+
 Stores price * time since last update
 
-2. Calculation Method
+3. Calculation Method
+   
 Takes two price-time observations
+
 Subtracts earlier from later observation
+
 Divides by time elapsed between observations
 
 Here's a practical example of TWAP for ETH/USDC pair:
@@ -44,19 +50,27 @@ This $2,025 represents the true average price weighted by time, making it resist
 Real-world uses:
 
 DeFi lending protocols determining collateral values
+
 Options protocols setting strike prices
+
 Stablecoin mechanisms maintaining pegs
 
 TWAP serves two main purposes:
 
 1. Protection Against Price Manipulation
+   
 Instead of using current spot price which can be manipulated
+
 Uses average price over time (like 24 hours)
+
 Makes it expensive for attackers to manipulate prices
 
-2. Stable Price Reference
+3. Stable Price Reference
+   
 Smooths out temporary price spikes
+
 Provides reliable price feed for other protocols
+
 Better than instant spot prices for important decisions
 
 How does TWAP protect against manipulation?
@@ -68,21 +82,29 @@ Here's why it works:
 To manipulate a 24-hour TWAP, an attacker would need to:
 
 Maintain artificial prices for many hours
+
 Deploy massive capital
+
 Pay high trading fees
+
 Fight against market forces
 
 Example:
 
 Spot Price: Can be manipulated with one large trade
+
 TWAP: Needs continuous large trades for hours
+
 Cost difference: Spot ($1M) vs TWAP ($24M+ over 24 hours)
 
 Real protection:
 
 Flash loan attacks become ineffective
+
 Price spikes get smoothed out
+
 Short-term manipulation attempts fail
+
 Market stability increases
 
 This makes TWAP an excellent security mechanism for DeFi protocols that need reliable price feeds for critical operations like lending, liquidations, and pricing.
