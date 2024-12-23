@@ -108,3 +108,51 @@ Short-term manipulation attempts fail
 Market stability increases
 
 This makes TWAP an excellent security mechanism for DeFi protocols that need reliable price feeds for critical operations like lending, liquidations, and pricing.
+
+
+
+-----------------------------------------------
+-----------------------------------------------
+
+Constant k in AMM
+
+x * y = k
+
+What the above mean is that the two pair tokens of a pool must always be equal to k. 
+
+Regardless of the money taken out or sent to a pool, the k must always be equal to the initial amount the pool was started with or the total balance of liquidity supplied to a pool.
+
+For example:
+
+Assume there is ETH/USDC pool
+
+```
+# Initial state
+initial_usdc = 20000
+initial_eth = 10
+initial_price = 2000  # (20000/10) USDC per ETH
+
+# After buying 1 ETH
+final_usdc = 22222
+final_eth = 9
+# Price for this specific trade:
+trade_price = 2222  # (22222 - 20000) USDC for 1 ETH - That is, amount paid by user who bought 1 ETH
+
+# New pool price
+new_price = 2469  # (22222/9) USDC per ETH
+```
+
+Proof that k remains 200000:
+
+```
+# Initial K
+initial_k = 10 * 20000  # = 200,000
+
+# After Trade
+new_eth = 9
+new_usdc = 200000 / 9  # = 22,222
+new_k = 9 * 22222      # = 200,000
+
+# K remains constant: 200,000 = 200,000
+```
+
