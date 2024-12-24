@@ -261,12 +261,84 @@ Speculating on price movements
 Risk management
 ```
 
-Let's break this down with a practical example of price manipulation in Uniswap v1:
+Let's break this down with a practical example of price manipulation in Uniswap v1. The below example is price manipulation by moving the price up.
 
-Initial State:
+```
+Initial Pool State & Price Rise:
 
-- ETH-DAI pool has 100 ETH and 200,000 DAI
-- Current price: 1 ETH = 2000 DAI
-- A derivative contract uses this price to determine liquidations at < 1999 DAI
+Pool starts: 100 ETH and 200,000 DAI
+Constant k = 100 × 200,000 = 20,000,000
 
+When attacker buys 50 ETH:
+
+New ETH balance = 50 ETH
+New DAI balance = 20,000,000/50 = 400,000 DAI
+New price = 400,000/50 = 4000 DAI per ETH
+
+User Short Position:
+
+ETH Price: 2000 DAI
+To borrow 5 ETH (worth 10,000 DAI)
+Deposit 10,000 DAI as collateral
+Sells borrowed 5 ETH for 10,000 DAI
+
+When Price Rises to 4000 DAI:
+
+Position value: 5 ETH × 4000 = 20,000 DAI
+Collateral: 10,000 DAI
+Loss: 10,000 DAI (collateral wiped out)
+
+Attacker's Opportunity:
+
+Buys 10,000 DAI collateral at 20% discount
+Pays 8,000 DAI for the collateral
+Gets 10,000 DAI worth of value
+Profit per position: 2,000 DAI
+
+Multiple Positions:
+
+If 10 similar positions liquidated
+Total profit: 20,000 DAI
+Minus gas fees and trading costs
+All in one transaction
+
+Key Profit Factors:
+
+Liquidation discount rate
+Number of short positions affected
+Speed of execution
+Market depth
+```
+
+Price Manipulation DOWN example:
+
+```
+Initial State & Price Drop:
+Pool: 100 ETH, 200,000 DAI
+When attacker sells 50 ETH:
+New ETH = 150 ETH
+New DAI = 20,000,000/150 = 133,333 DAI
+New price = 133,333/150 = 889 DAI per ETH
+
+Long Position Example:
+Trader deposits 10,000 DAI as collateral
+Borrows additional 40,000 DAI (5x leverage)
+Buys 25 ETH at 2000 DAI each
+Position value at 889 DAI: 25 ETH × 889 = 22,225 DAI
+Loss: 50,000 - 22,225 = 27,775 DAI
+Position liquidated as value falls below collateral
+
+Attacker's Profit Path:
+Buys liquidated collateral (10,000 DAI) at 20% discount = 8,000 DAI
+Buys back 50 ETH from pool at 889 DAI
+Pool returns to original state
+Profit per liquidation = 2,000 DAI
+Multiple liquidations multiply profit
+
+Final Numbers:
+Cost to buy back 50 ETH: 44,450 DAI
+Original sale of 50 ETH: 66,667 DAI
+Trading profit: 22,217 DAI
+Plus liquidation profits from discounted collateral
+```
 
