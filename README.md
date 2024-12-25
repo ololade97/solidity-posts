@@ -413,7 +413,7 @@ Note that the "k" constant must be correct AFTER deducting fees for the service.
 Note that aside the example above, users can return the original tokens without performing a swap. This feature enables anyone to flash borrow any amount of tokens from Uniswap pools (flash loan fees are the same as transaction fees, both 0.30%).
 
 
-# Using Geometric mean in Uniswap
+# Using Geometric mean in Uniswap V2
 
 What's Geometric mean?
 
@@ -428,3 +428,41 @@ First deposit is:
 Geometric mean = √(2 * 800)
 2 * 800 = 1600
 √1600 = 40 liquidity tokens
+
+This method is valuable because:
+
+- It captures the true relationship between two different token quantities
+
+- It ensures liquidity providers get fair representation of their deposits
+
+The value can only go up through:
+
+- Trading fees being added to the pool
+
+- Direct token donations to the pool
+
+How can the value only go up through trading fees added to the pool and direct token donations to the pool?
+
+The value of liquidity tokens can only increase through these mechanisms because:
+
+Trading Fees:
+
+- Every trade adds a 0.3% fee to the pool
+
+- These fees accumulate in the pool
+  
+- The total pool value grows while the number of liquidity tokens stays the same
+  
+- Therefore, each liquidity token represents a larger share of a growing pool
+
+Direct Token Donations:
+
+- When tokens are sent directly to the pool without minting new liquidity tokens
+
+- The pool's total value increases
+
+- The same number of liquidity tokens now represent more underlying tokens
+
+- Each liquidity token becomes more valuable
+
+Note the word "value". The amount of liquidity tokens shows the percentage of your shares in a liquidity of a pool. Even if a liquidity pool increases, it doesn't change the percentage you hold, that is, your liquidity tokens.
