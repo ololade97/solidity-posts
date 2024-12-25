@@ -381,3 +381,18 @@ Plus liquidation profits from discounted collateral
 
    To prevent this, the core Uniswap V2 contract caches the token balances after each interaction, updating the         oracle price using the cached (not real-time) balances.
 
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+# How Flashloan works
+
+```
+User wants to swap ETH for USDC
+Uniswap sends USDC to user's callback contract first
+Callback contract uses USDC however it wants
+Callback contract must send ETH back to Uniswap as payment
+If ETH payment is correct, swap succeeds; if not, everything reverts
+```
+
+
