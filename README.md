@@ -397,3 +397,5 @@ If ETH payment is correct, swap succeeds; if not, everything reverts
 A better way to understand flashloan is to think that the receiver of the swap amount is the callback contract - the contract the user is sending the swapped USDC. The callback contract receives USDC on behalf of the user.
 
 Note that the "k" constant must be correct AFTER deducting fees for the service.
+
+Note that aside the example above, users can return the original tokens without performing a swap. This feature enables anyone to flash borrow any amount of tokens from Uniswap pools (flash loan fees are the same as transaction fees, both 0.30%).
