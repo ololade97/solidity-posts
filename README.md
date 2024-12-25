@@ -394,5 +394,4 @@ Callback contract uses USDC however it wants
 Callback contract must send ETH back to Uniswap as payment
 If ETH payment is correct, swap succeeds; if not, everything reverts
 ```
-
-
+A better way to understand flashloan is to think that the receiver of the swap amount is the callback contract - the contract the user is sending the swapped USDC. The callback contract receives USDC on behalf of the user.
