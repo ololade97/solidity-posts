@@ -381,6 +381,18 @@ Plus liquidation profits from discounted collateral
 
    To prevent this, the core Uniswap V2 contract caches the token balances after each interaction, updating the         oracle price using the cached (not real-time) balances.
 
+   3. USDT and BNB don't return a value after transfer
+      
+      The ERC-20 standard requires transfer() and transferFrom() to return a boolean indicating success. However,          some tokens, like USDT and BNB, do not return a value for these methods (or one of them). Uniswap v1 treated         the absence of a return value as a failure, leading to transaction reverts and failures.
+
+      Uniswap v2 addresses non-standard ERC-20 implementations differently. If a transfer() method does not return a       value, Uniswap v2 assumes it indicates success, not failure. This change does not affect tokens adhering to          the standard ERC-20 (as their transfer() methods return a value).
+
+      Also, Uniswap v1 assumed transfer() and transferFrom() could not trigger reentrant calls into the pair               contract. This assumption conflicts with some ERC-20 tokens, including those supporting ERC-777 standard             hooks. To fully support these tokens, Uniswap v2 introduces a "lock" mechanism to solve reentrancy issues for        all publicly mutable state methods, also addressing custom callback reentrancy in flash loans.
+
+      The lock is essentially a Solidity modifier, controlled by an unlock variable, to manage synchronous locking.
+
+
+
 
 ------------------------------------------------------------------
 ------------------------------------------------------------------
@@ -399,3 +411,20 @@ A better way to understand flashloan is to think that the receiver of the swap a
 Note that the "k" constant must be correct AFTER deducting fees for the service.
 
 Note that aside the example above, users can return the original tokens without performing a swap. This feature enables anyone to flash borrow any amount of tokens from Uniswap pools (flash loan fees are the same as transaction fees, both 0.30%).
+
+
+# Using Geometric mean in Uniswap
+
+What's Geometric mean?
+
+Geometric mean in Uniswap is calculated by multiplying two numbers and taking their square root.
+
+Let's break down the example:
+
+First deposit is:
+2 ABC tokens
+800 XYZ tokens
+
+Geometric mean = √(2 * 800)
+2 * 800 = 1600
+√1600 = 40 liquidity tokens
