@@ -342,3 +342,42 @@ Trading profit: 22,217 DAI
 Plus liquidation profits from discounted collateral
 ```
 
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+# Uniswap V2 Bugs You should look out for
+
+1. Is token prices recorded for the two token pairs
+
+   For instance, if the price at block 1 is 100 USD/ETH (B being USD, A being ETH) and at block 2 is 300 USD/ETH,
+   the average price is 200 USD/ETH, but the average price of ETH/USD would be 1/150 ETH/USD. Since the contract
+   cannot know which token users will use as the pricing unit, Uniswap v2 records prices for both tokens.
+
+   See: https://github.com/adshao/publications/blob/master/uniswap/dive-into-uniswap-v2-whitepaper/README.md
+
+2. Users can directly send tokens to the pair contract (changing the token balances and affecting the price) without    a transaction, bypassing the oracle update mechanism
+
+   If the contract simply checks its balances and uses the current balance to update the oracle price, an attacker      could manipulate the oracle price by sending tokens to the contract just before the first transaction of a           block.
+
+   For example:
+   
+   ```
+   Imagine a shop that records the average price of apples throughout the day. They calculate this by looking at how    many apples and dollars they have in their register.
+
+   Normal Scenario:
+
+   Shop has 100 apples and $200
+   This means apples cost $2 each
+   This price should be recorded for the whole time period until the next real sale
+
+   Attack Scenario:
+
+   Shop has 100 apples and $200 (price is $2)
+   Someone sneakily adds 100 more apples to the shop's inventory without buying them
+   Now there are 200 apples and $200
+   This makes it look like apples cost $1 each
+   The shop wrongly records this $1 price for the whole time period
+   ```
+
+   To prevent this, the core Uniswap V2 contract caches the token balances after each interaction, updating the         oracle price using the cached (not real-time) balances.
+
