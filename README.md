@@ -466,3 +466,22 @@ Direct Token Donations:
 - Each liquidity token becomes more valuable
 
 Note the word "value". The amount of liquidity tokens shows the percentage of your shares in a liquidity of a pool. Even if a liquidity pool increases, it doesn't change the percentage you hold, that is, your liquidity tokens.
+
+**What determines the amount of liquidity to be provided by liquidity providers to a pool?**
+
+The amount of liquidity to be provided by later liquidity providers is determined by the current ratio of tokens in the pool.
+
+For example: If a pool has:
+
+- 10 ETH
+- 20,000 USDC
+- Price ratio is 1 ETH : 2000 USDC
+
+A new liquidity provider must maintain this exact ratio. They could deposit:
+
+- 1 ETH + 2000 USDC (small position)
+- 5 ETH + 10,000 USDC (medium position)
+- 20 ETH + 40,000 USDC (large position)
+
+
+
