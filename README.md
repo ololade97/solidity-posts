@@ -483,5 +483,49 @@ A new liquidity provider must maintain this exact ratio. They could deposit:
 - 5 ETH + 10,000 USDC (medium position)
 - 20 ETH + 40,000 USDC (large position)
 
+Note that the worth of LP tokens determines the minimum amount of liquidity to be provided. See below.
+
+
+# First deposit attack on Uniswap V2 (Although prevented)
+
+Note that the smallest unit of Liquidity Pool (LP) token you can get is 1 wei. Now imagine that to get the 1 wei LP token, you have to provide a very large liquidity to the pool. This therefore denies others from proividing liquidity.
+
+Here's a practical example:
+
+```
+Step 1: Attacker's Initial Minimum Deposit
+
+Deposits 1 wei ABC and 1 wei XYZ (smallest possible units)
+Gets 1 wei of liquidity tokens (√(1 * 1) = 1)
+Pool ratio is 1 ABC : 1 XYZ
+Step 2: Attack Execution (same transaction)
+
+Transfers 1 million ABC + 1 million XYZ directly to pool
+Calls sync() to update balances
+Pool now has: 1,000,000.000000000000001 ABC and 1,000,000.000000000000001 XYZ
+Still only 1 wei of liquidity tokens exists
+Step 3: Impact
+
+That 1 wei liquidity token now represents claim to:
+1 million ABC + 1 wei ABC
+1 million XYZ + 1 wei XYZ
+New providers must deposit proportionally to get even 1 wei of LP token
+Example: To get 1 wei of LP token, need to deposit:
+1 million ABC + 1 million XYZ
+```
+
+The worth of LP tokens determines the minimum amount of liquidity to be provided.
+
+In the attack scenario:
+
+1 wei LP token is worth:
+
+- 1 million ABC + 1 wei ABC
+- 1 million XYZ + 1 wei XYZ
+- New LPs must provide liquidity proportional to this value to receive even 1 wei of LP token:
+
+- Need to deposit approximately 1 million of each token
+- This maintains the pool's ratio and value per LP token
+
 
 
