@@ -47,6 +47,13 @@ TWAP = $48,600 ÷ 24 hours = $2,025
 
 This $2,025 represents the true average price weighted by time, making it resistant to short-term price spikes or manipulation.
 
+To get the average price between two timestamps:
+
+Take two snapshots of the cumulative price
+Subtract the earlier value from the later value
+Divide by the time elapsed
+
+
 Real-world uses:
 
 DeFi lending protocols determining collateral values
